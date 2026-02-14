@@ -5,50 +5,56 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Kanha 💖</title>
 <style>
+/* ===== Body & Centering ===== */
 body {
     margin: 0;
     padding: 0;
     background: radial-gradient(circle at center, #ffe6e9, #ffb3c6, #ff7eb3);
     font-family: 'Poppins', sans-serif;
-    overflow: hidden;
-    text-align: center;
     color: white;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
 }
 
-/* Container for message */
+/* Container for page 1 */
 .container {
-    position: relative;
-    top: 35%; /* Lowered title for page 1 and 2 */
-    transform: translateY(-35%);
-    z-index:2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* space between header and button */
 }
 
-/* Title glow */
+/* ===== Header Glow ===== */
 h1 {
     font-size: clamp(28px, 5vw, 50px);
-    margin-bottom: 20px;
     animation: glow 2s ease-in-out infinite alternate;
     text-shadow: 0 0 15px white;
-    opacity: 0;
+    opacity: 1; /* always visible */
     transition: 1s;
 }
 
+/* Header glow animation */
 @keyframes glow {
     from { text-shadow: 0 0 10px white; }
     to { text-shadow: 0 0 25px white; }
 }
 
+/* ===== Paragraphs ===== */
 p {
     font-size: clamp(18px, 2.5vw, 24px);
     line-height: 1.8;
-    margin: 10px 20px;
-    opacity: 0;
+    margin: 5px 20px;
+    opacity: 0; /* hidden initially */
     transition: 1s;
     color: #fff;
     text-shadow: 0 0 8px rgba(0,0,0,0.3);
 }
 
-/* Button */
+/* ===== Button ===== */
 button {
     padding: 15px 35px;
     font-size: 18px;
@@ -58,7 +64,6 @@ button {
     color: #ff4b7d;
     cursor: pointer;
     transition: 0.3s;
-    margin-top: 25px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
@@ -68,14 +73,12 @@ button:hover {
     transform: scale(1.1);
 }
 
-/* Flower animation */
+/* ===== Flower Animation ===== */
 .flower {
     position: fixed;
-    top: 50%;
-    left: 50%;
     font-size: 24px;
     animation: explode linear forwards;
-    z-index:1;
+    z-index: 1;
     pointer-events: none;
 }
 
@@ -86,13 +89,6 @@ button:hover {
     }
 }
 
-.hidden {
-    opacity:0;
-}
-.visible {
-    opacity:1;
-}
-
 @keyframes fall {
     to {
         transform: translateY(110vh) rotate(360deg);
@@ -100,10 +96,18 @@ button:hover {
     }
 }
 
-/* Simple gift text below flower burst */
+/* Hidden / Visible Classes */
+.hidden {
+    opacity: 0;
+}
+.visible {
+    opacity: 1;
+}
+
+/* Gift text below flowers */
 #giftText {
     font-size: clamp(20px, 2.5vw, 26px);
-    margin-top: 30px;
+    margin-top: 20px;
     opacity: 0;
     transition: 1s;
     color: #fff;
@@ -117,15 +121,10 @@ button:hover {
 
 <div class="container">
     <h1 id="title">Happy Valentine’s Day 🌸</h1>
-    <p>Dear Kanha,</p>
-    <p id="message">
-        You are the most beautiful part of my days.<br>
-        Every smile of yours makes my heart happier. 💖
-    </p>
     <button id="openBtn">Open My Flower Gift 🌸</button>
 
     <div id="secret" class="hidden">
-        <p style="margin-top:20px; font-size: clamp(18px, 2.5vw, 24px);">
+        <p>
             Kanha, my heart feels so full whenever I think of you.<br>
             Your kindness, your laughter, your beautiful smile<br>
             make every moment brighter and every day more special. ❤️<br><br>
@@ -137,7 +136,6 @@ button:hover {
         </p>
     </div>
 
-    <!-- Gift text below the burst -->
     <div id="giftText">
         This special gift is just for you, Kanha 💐<br>
         With all my love and affection 💕
@@ -145,19 +143,18 @@ button:hover {
 </div>
 
 <script>
-// Flower emojis
+// ===== Flower Emoji Array =====
 const flowers = ["🌸","🌷","🌹","💐","🌺"];
 const openBtn = document.getElementById("openBtn");
-const title = document.getElementById("title");
-const message = document.getElementById("message");
 const secret = document.getElementById("secret");
 const giftText = document.getElementById("giftText");
 
+// ===== Button Click Event =====
 openBtn.addEventListener("click", () => {
     openBtn.style.display = "none"; // Hide button
 
     // Exploding flowers
-    for(let i=0;i<50;i++){
+    for(let i=0; i<50; i++){
         const el = document.createElement('div');
         el.className='flower';
         el.innerHTML = flowers[Math.floor(Math.random()*flowers.length)];
@@ -170,22 +167,20 @@ openBtn.addEventListener("click", () => {
         el.style.animationDuration = (Math.random()*2 + 2)+'s';
         document.body.appendChild(el);
 
-        setTimeout(()=> el.remove(),3000);
+        setTimeout(()=> el.remove(), 3000);
     }
 
-    // Show messages after flower burst (3s)
+    // Show hidden message and gift text after 3s
     setTimeout(() => {
-        title.classList.add('visible');
-        message.classList.add('visible');
         secret.classList.add('visible');
-        giftText.style.opacity = 1; // Show gift text below
+        giftText.style.opacity = 1;
     }, 3000);
 
     // Continuous floating flowers
     setInterval(createFloatingFlower, 150);
 });
 
-// Continuous floating flowers
+// ===== Continuous Floating Flowers =====
 function createFloatingFlower(){
     const el = document.createElement('div');
     el.className='flower';
